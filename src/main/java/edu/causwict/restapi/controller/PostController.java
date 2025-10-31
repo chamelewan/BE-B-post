@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import java.util.List;
+
 import edu.causwict.restapi.entity.Post;
 import edu.causwict.restapi.service.PostService;
 
@@ -43,5 +46,11 @@ public class PostController {
         String content = (String) param.get("content");
 
         return postService.update(id, title, content);
+    }
+
+    // Read (List)
+    @GetMapping
+    public List<Post> getPosts() {
+        return postService.findAll();
     }
 }

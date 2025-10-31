@@ -1,9 +1,10 @@
 package edu.causwict.restapi.service;
 
 import org.springframework.stereotype.Service;
-
 import edu.causwict.restapi.entity.Post;
 import edu.causwict.restapi.repository.InMemoryPostRepository;
+
+import java.util.List;
 
 @Service
 public class PostService {
@@ -31,6 +32,10 @@ public class PostService {
 
         // 3. 저장소에 업데이트
         return postRepository.update(id, updatedPost);
+    }
+
+    public List<Post> findAll() {
+        return postRepository.findAll();
     }
 }
 
