@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+
 import edu.causwict.restapi.entity.Post;
 import edu.causwict.restapi.service.PostService;
 
@@ -29,4 +32,16 @@ public class PostController {
 
 		return created;
 	}
+
+    // Update
+    @PutMapping("/{id}")
+    public Post update(
+            @PathVariable Long id,
+            @RequestBody Map<String, Object> param) {
+
+        String title = (String) param.get("title");
+        String content = (String) param.get("content");
+
+        return postService.update(id, title, content);
+    }
 }

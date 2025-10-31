@@ -28,4 +28,17 @@ public class InMemoryPostRepository {
 		return new ArrayList<>(store.values());
 	}
 
+    public Post findById(Long id) {
+        return store.get(id);  // id로 게시글 찾기
+    }
+
+    public Post update(Long id, Post post) {
+        if (!store.containsKey(id)) {
+            return null;  // 해당 id의 게시글이 없으면 null 반환
+        }
+        post.setId(id);  // id 설정
+        store.put(id, post);  // 기존 게시글 덮어쓰기
+        return post;
+    }
+
 }
