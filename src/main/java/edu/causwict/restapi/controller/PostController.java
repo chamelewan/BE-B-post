@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import edu.causwict.restapi.entity.Post;
 import edu.causwict.restapi.service.PostService;
@@ -52,5 +52,10 @@ public class PostController {
     @GetMapping
     public List<Post> getPosts() {
         return postService.findAll();
+    }
+
+    @GetMapping("/search")
+    public List<Post> searchPosts(@RequestParam("keyword") String keyword) {
+        return postService.searchByTitle(keyword);
     }
 }

@@ -5,6 +5,7 @@ import edu.causwict.restapi.entity.Post;
 import edu.causwict.restapi.repository.InMemoryPostRepository;
 
 import java.util.List;
+import java.util.Collections;
 
 @Service
 public class PostService {
@@ -28,7 +29,7 @@ public class PostService {
             throw new IllegalArgumentException("제목(title)은 30자를 넘을 수 없습니다.");
         }
 
-        // (5번쨰 기능) 제목 중복 검증 - InMemoryPostRepository의 findByTitle 메소드를 사용
+        // (5번째 기능) 제목 중복 검증 - InMemoryPostRepository의 findByTitle 메소드를 사용
         if (postRepository.findByTitle(title) != null) {
             throw new IllegalArgumentException("이미 존재하는 제목(title)입니다.");
         }
@@ -71,6 +72,14 @@ public class PostService {
 
     public List<Post> findAll() {
         return postRepository.findAll();
+    }
+
+    // (6번째 최종 기능) 제목 키워드로 게시글을 검색하는 메서드
+    public List<Post> searchByTitle(String keyword) {
+        if (keyword == null || keyword.trim().isEmpty()) {
+            return java.util.Collections.emptyList();
+        }
+        return postRepository.findByTitleContaining(keyword);
     }
 }
 

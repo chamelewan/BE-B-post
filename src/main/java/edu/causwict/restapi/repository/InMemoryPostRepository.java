@@ -2,6 +2,7 @@ package edu.causwict.restapi.repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
@@ -50,6 +51,16 @@ public class InMemoryPostRepository {
                 .filter(post -> post.getTitle().equals(title))
                 .findFirst()
                 .orElse(null);
+    }
+
+    // 제목(title)에 키워드가 포함된 모든 게시글을 찾는 메서드
+    public List<Post> findByTitleContaining(String keyword) {
+        // store의 모든 값을 순회하면서
+        return store.values().stream()
+                // post의 제목(getTitle())에 keyword가 포함되어 있는지(contains) 확인
+                .filter(post -> post.getTitle().contains(keyword))
+                // 필터를 통과한 모든 Post를 List로 모아서 반환
+                .collect(java.util.stream.Collectors.toList());
     }
 
 }
