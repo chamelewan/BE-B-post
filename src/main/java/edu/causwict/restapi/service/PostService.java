@@ -28,6 +28,11 @@ public class PostService {
             throw new IllegalArgumentException("제목(title)은 30자를 넘을 수 없습니다.");
         }
 
+        // (5번쨰 기능) 제목 중복 검증 - InMemoryPostRepository의 findByTitle 메소드를 사용
+        if (postRepository.findByTitle(title) != null) {
+            throw new IllegalArgumentException("이미 존재하는 제목(title)입니다.");
+        }
+
 		Post post = new Post(null, title, content);
 		return postRepository.save(post);
 	}
@@ -41,6 +46,14 @@ public class PostService {
         // 제목 30글자 넘는지 체크
         if (title.length() > 30) {
             throw new IllegalArgumentException("제목(title)은 30자를 넘을 수 없습니다.");
+        }
+
+        // create와 다르게 우선 제목이 같은 게시글(객체)를 먼저 찾음.
+        Post postWithSameTitle = postRepository.findByTitle(title);
+        // 찾았는데(not null) && 그 게시글의 ID가 지금 수정하려는 ID와 다른 케이스
+        // 즉, 다른 게시글이 이 제목을 이미 쓰고 있는 경우.
+        if (postWithSameTitle != null && !postWithSameTitle.getId().equals(id)) {
+            throw new IllegalArgumentException("다른 게시글에서 이미 사용 중인 제목(title)입니다.");
         }
 
         // 1. 기존 게시글이 존재하는지 확인

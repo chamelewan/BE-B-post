@@ -41,4 +41,15 @@ public class InMemoryPostRepository {
         return post;
     }
 
+
+    public Post findByTitle(String title) {
+        // store에 저장된 모든 Post 객체(store.values())를 순회(stream)하면서
+        // post의 제목(post.getTitle())이 파라미터로 받은 title과 같은지(equals) 확인.
+        // 찾은 첫 번째(findFirst) Post를 반환하고, 없으면 null을 반환.
+        return store.values().stream()
+                .filter(post -> post.getTitle().equals(title))
+                .findFirst()
+                .orElse(null);
+    }
+
 }
