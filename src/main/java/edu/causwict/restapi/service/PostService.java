@@ -16,11 +16,23 @@ public class PostService {
 	}
 
 	public Post create(String title, String content) {
+
+        // 제목 비어있는지 검증하는 로직 추가
+        if (title == null || title.trim().isEmpty()) {
+            throw new IllegalArgumentException("제목(title)은 비어 있을 수 없습니다.");
+        }
+        // trim()을 통해서 ""인경우와 "    " 처럼 여러번 공백들어간 경우 모두 ""로 바꿔버림.
+
 		Post post = new Post(null, title, content);
 		return postRepository.save(post);
 	}
 
     public Post update(Long id, String title, String content) {
+        // 제목 비어있는지 검증하는 로직 추가, create와 update 메소드 전부 추가
+        if (title == null || title.trim().isEmpty()) {
+            throw new IllegalArgumentException("제목(title)은 비어 있을 수 없습니다.");
+        }
+
         // 1. 기존 게시글이 존재하는지 확인
         Post existingPost = postRepository.findById(id);
         if (existingPost == null) {
