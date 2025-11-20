@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    # 1. 한글 깨짐 방지 및 타임존 설정을 URL에 추가
+    url: jdbc:mysql://localhost:3306/study?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: csryan@02
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  sql:
+    init:
+      mode: never
+
+  jpa:
+    # 2. ddl-auto를 스프링 부트 표준 설정 위치로 꺼냄.
+    hibernate:
+      ddl-auto: update
+
+    # 3. 하이버네이트 상세 설정
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+        default_batch_fetch_size: 1000
+
+    # 4. (선택) OSIV 설정: false로 끄는 것이 성능상 좋지만,
+    #    개념이 어렵다면 당장은 true(기본값)로 두셔도 됩니다.
+    open-in-view: true
